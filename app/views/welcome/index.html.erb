@@ -10,8 +10,87 @@
 			<main>
 				<div id="welcome-box" class="col-md-6 col-md-offset-3">
 					<div class="row">
-						<div id="sign-up_or_login">
-							<h3>Please  <button class="btn" id="sign_up">Sign Up</button> or <button class="btn" id="login">Login</button></h3>	
+						<div id="sign-up_or_login" style="display:block">
+							<h3>please  <button class="btn btn-default" id="sign_up">sign up</button> or <button class="btn btn-default" id="login">login</button>.</h3>
+						</div>
+
+						<div id="loginForm" style="display:none">
+							<% if @error %>
+								<p style='color: red;'>Incorrect email/password</p>
+							<% end %>
+							<form action="/session" method="POST" class="form-horizontal" role="form">
+							  <div class="form-group">
+							    <label for="sessionUser" class="col-md-2 control-label">username</label>
+							    <div class="col-md-4">
+							      <input type="text" class="form-control" id="sessionUser" name="user" placeholder="username">
+							    </div>
+							  </div>
+							  <div class="form-group">
+							    <label for="sessionPassword" class="col-md-2 control-label">password</label>
+							    <div class="col-md-4">
+							      <input type="password" class="form-control" id="sessionPassword" name="password" placeholder="password">
+							    </div>
+							  </div>
+							  <input name="authenticity_token" value="<%= form_authenticity_token() %>" type="hidden">
+							  <div class="form-group">
+							    <div class="col-sm-offset-2 col-sm-10">
+							      <button type="submit" id="createSession" class="btn btn-default">Sign in</button>
+							    </div>
+							  </div>
+							</form>
+						</div>
+
+						<div id="newUserForm" class="col-sm-offset-2" style="display:none">
+							<form action="/users" method="POST" class="form-horizontal" role="form">
+							  <div class="form-group">
+							    <label for="newUserName" class="col-md-3 control-label">username</label>
+							    <div class="col-md-4">
+							      <input type="text" class="form-control" id="newUserName" name="name" placeholder="username">
+							    </div>
+							  </div>
+							  <div class="form-group">
+							    <label for="newUserFullName" class="col-md-3 control-label">full name</label>
+							    <div class="col-md-6">
+							      <input type="text" class="form-control" id="newUserFullName" name="full_name" placeholder="full name">
+							    </div>
+							  </div>
+							  <div class="form-group">
+							    <label for="newUserEmail" class="col-md-3 control-label">email</label>
+							    <div class="col-md-6">
+							      <input type="text" class="form-control" id="newUserEmail" name="email" placeholder="email">
+							    </div>
+							  </div>
+							  <div class="form-group">
+							    <label for="newUserCity" class="col-md-3 control-label">city</label>
+							    <div class="col-md-5">
+							      <input type="text" class="form-control" id="newUserCity" name="city" placeholder="city">
+							    </div>
+							  </div>
+								<div class="form-group">
+							    <label class="col-md-3 control-label" for="newAvatar">upload photo</label>
+							    <div class="col-md-6">
+							    <input type="file" id="newAvatar" name="avatar">
+							    </div>
+							  </div>							  							  						  			  
+							  <div class="form-group">
+							    <label for="newPassword" class="col-md-3 control-label">password</label>
+							    <div class="col-md-4">
+							      <input type="password" class="form-control" id="newPassword" name="password" placeholder="password">
+							    </div>
+							  </div>
+							  <div class="form-group">
+							    <label for="confirmNewPassword" class="col-md-3 control-label">confirm password</label>
+							    <div class="col-md-4">
+							      <input type="password" class="form-control" id="confirmNewPassword" name="confirmPassword" placeholder="password">
+							    </div>
+							  </div>								  							  
+							  <input name="authenticity_token" value="<%= form_authenticity_token() %>" type="hidden">
+							  	<div class="form-group">
+							    <div class="col-sm-offset-3 col-md-4">
+							      <button type="submit" id="createUser" class="btn btn-default">sign me up.</button>
+							    </div>
+							  </div>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -19,3 +98,14 @@
 
 			</main>
 		</div>
+		<script type="text/javascript">
+			$("#sign_up").click(function(){
+				$("#sign-up_or_login").toggle("slow")
+				$("#newUserForm").toggle("slow")
+			})
+
+			$("#login").click(function(){
+				$("#sign-up_or_login").toggle("slow")
+				$("#loginForm").toggle("slow")
+			})
+		</script>
