@@ -1,0 +1,12 @@
+div#welcome {
+	text-align:center;
+}
+
+div#sign-up_or_login {
+	text-align: center;
+}
+
+div#welcome-box {
+	border: 1px solid black;
+	border-radius: 5px;
+}

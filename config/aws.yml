@@ -1,0 +1,13 @@
+defaults: &defaults
+  access_key_id: "AKIAIVZC433GWZGRD6VQ"
+  secret_access_key: "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"
+development:
+  <<: *defaults
+  bucket: "coffeecovet"
+test:
+  <<: *defaults
+  bucket: "coffeecovet"
+production:
+  access_key_id: <%=ENV["AWS_ACCESS_KEY_ID"]%>
+  secret_access_key: <%=ENV["AWS_SECRET_ACCESS_KEY"]%>
+  bucket: "coffeecovetdeployment"

@@ -31,7 +31,13 @@ Rails.application.configure do
 
   # Generate digests for assets URLs.
   config.assets.digest = true
-
+config.paperclip_defaults = {
+  :storage => :s3,
+  :s3_credentials => {
+    :bucket => 'coffeecovet'
+  }
+}
+  Paperclip.options[:command_path] = "/usr/local/bin/"
   # `config.assets.precompile` has moved to config/initializers/assets.rb
 
   # Specifies the header that your server uses for sending files.
