@@ -1,0 +1,24 @@
+<%= bootstrap_form_for(@user, multipart: true, layout: :horizontal, label_col: "col-md-3", control_col: "col-md-6") do |f| %>
+							  <% if @user.errors.any? %>
+							    <div id="error_explanation">
+							      <h2><%= pluralize(@user.errors.count, "error") %> prohibited your account from being created:</h2>
+
+							      <ul>
+							      <% @user.errors.full_messages.each do |msg| %>
+							        <li><%= msg %></li>
+							      <% end %>
+							      </ul>
+							    </div>
+							  <% end %>
+
+							    <%= f.text_field :name, label: 'username' %>
+							    <%= f.text_field :full_name, label: 'full name' %>
+							    <%= f.text_field :email, label: 'email' %>
+							    <%= f.text_field :city, label: 'city' %>
+							    <%= f.file_field :avatar, label: 'photo' %>
+							    <%= f.password_field :password, label: 'password' %>
+							    <%= f.password_field :password_confirmation, label: 'confirm password' %>
+							    <%= f.hidden_field :authenticity_token, value: form_authenticity_token() %>
+							    <%= f.submit 'sign me up.' %>
+
+							<% end %>

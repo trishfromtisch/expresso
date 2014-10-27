@@ -16,7 +16,7 @@
 
 						<div id="loginForm" style="display:none">
 							<% if @error %>
-								<p style='color: red;'>Incorrect email/password</p>
+								<p style='color: red;'>Incorrect username/password</p>
 							<% end %>
 							<form action="/session" method="POST" class="form-horizontal" role="form">
 							  <div class="form-group">
@@ -41,20 +41,34 @@
 						</div>
 
 						<div id="newUserForm" class="col-sm-offset-2" style="display:none">
-							<form action="/users" method="POST" class="form-horizontal" role="form">
+							<%= render 'form' %>
+						</div>
+
+					</div>
+				</div>
+
+
+
+
+
+
+
+
+
+<!-- 							<form action="/users" method="POST" class="form-horizontal" role="form">
 							  <div class="form-group">
 							    <label for="newUserName" class="col-md-3 control-label">username</label>
 							    <div class="col-md-4">
 							      <input type="text" class="form-control" id="newUserName" name="name" placeholder="username">
-							    </div>
-							  </div>
+							    </div> -->
+<!-- 							  </div>
 							  <div class="form-group">
 							    <label for="newUserFullName" class="col-md-3 control-label">full name</label>
 							    <div class="col-md-6">
 							      <input type="text" class="form-control" id="newUserFullName" name="full_name" placeholder="full name">
 							    </div>
-							  </div>
-							  <div class="form-group">
+							  </div> -->
+<!-- 							  <div class="form-group">
 							    <label for="newUserEmail" class="col-md-3 control-label">email</label>
 							    <div class="col-md-6">
 							      <input type="text" class="form-control" id="newUserEmail" name="email" placeholder="email">
@@ -81,7 +95,7 @@
 							  <div class="form-group">
 							    <label for="confirmNewPassword" class="col-md-3 control-label">confirm password</label>
 							    <div class="col-md-4">
-							      <input type="password" class="form-control" id="confirmNewPassword" name="confirmPassword" placeholder="password">
+							      <input type="password" class="form-control" id="confirmNewPassword" name="password_confirmation" placeholder="password">
 							    </div>
 							  </div>								  							  
 							  <input name="authenticity_token" value="<%= form_authenticity_token() %>" type="hidden">
@@ -92,9 +106,10 @@
 							  </div>
 							</form>
 						</div>
+
 					</div>
 				</div>
-
+ -->
 
 			</main>
 		</div>

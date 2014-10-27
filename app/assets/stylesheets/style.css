@@ -11,3 +11,7 @@ div#welcome-box {
 	border-radius: 5px;
 	padding: -20px;
 }
+
+nav div a {
+	text-align: center;
+}

@@ -11,16 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141026022319) do
+ActiveRecord::Schema.define(version: 20141027154954) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "beverages", force: true do |t|
-    t.string "name"
-  end
-
-  create_table "brands", force: true do |t|
     t.string "name"
   end
 
@@ -50,11 +46,6 @@ ActiveRecord::Schema.define(version: 20141026022319) do
     t.integer "user_id"
   end
 
-  create_table "follows", force: true do |t|
-    t.integer "user_id"
-    t.integer "follower_id"
-  end
-
   create_table "likes", force: true do |t|
     t.integer "user_id"
     t.integer "post_id"
@@ -63,7 +54,6 @@ ActiveRecord::Schema.define(version: 20141026022319) do
   create_table "posts", force: true do |t|
     t.integer  "user_id"
     t.integer  "beverage_id"
-    t.integer  "brand_id"
     t.integer  "brew_method_id"
     t.integer  "coffee_rating"
     t.string   "avatar_file_name"
@@ -73,7 +63,19 @@ ActiveRecord::Schema.define(version: 20141026022319) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "coffee_bar_id"
+    t.string   "roaster"
   end
+
+  create_table "relationships", force: true do |t|
+    t.integer  "follower_id"
+    t.integer  "followed_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "relationships", ["followed_id"], name: "index_relationships_on_followed_id", using: :btree
+  add_index "relationships", ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true, using: :btree
+  add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "name"
