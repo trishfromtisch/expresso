@@ -1,1 +1,45 @@
-new.html.erb
+
+<header>
+	<div class="row">
+		<h1>Expresso</h1>
+		<br>
+	</div>
+	<div class="row">
+		<nav>
+			<div class="col-md-2 col-md-offset-2">
+				<a id="home">home</a>
+			</div>
+			<div class="col-md-2">	
+				<a id="newPost" href="">new brew</a>
+			</div>
+			<div class="col-md-2">
+				<a id="myBrew" href="">my brews</a>
+			</div>
+			<div class="col-md-2">
+				<a id="search" href="">find brew</a>
+			</div>
+			<div class="col-md-2">
+				<a id="logout" href="">logout</a>
+			</div>			
+		</nav>
+	</div>
+	
+</header>
+
+<div id="homeDiv" style="display:block">
+	<h3 class="greeting">hello <%= @user.name %></h3>
+	<img src="<%= @user.avatar.url(:thumb) %>"> 
+</div>
+	
+<div id="newPostDiv" style="display:block">
+	<div class="row">
+		<div id="mapDiv" class="col-md-offset-4">
+			<h5>where'd you get your brew?</h5>
+	    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+	    <div id="map-canvas"></div>
+	    <br>
+    </div>
+		<%= render 'form' %>
+	</div>
+</div>
+

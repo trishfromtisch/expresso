@@ -8,9 +8,9 @@
 
 # meg = User.create({name: "coffeecraver", password: "1234", full_name: Meg Jones", })
 
-brewing_methods = ["percolator", "softbrew", "vacuum pot", "pour over", "aeropress", "french press", "technivorm", "chemex", "full immersion (abid, clever, driver)", "cold brew", "turkish", "unknown"]
+brewing_methods = ["unknown", "percolator", "softbrew", "vacuum pot", "pour over", "aeropress", "french press", "technivorm", "chemex", "full immersion (abid, clever, driver)", "cold brew", "turkish"]
 
-beverages = ["Affogato", "Antoccino", "Black eye", "Black tie", "Breve",
+beverages = ['other', "Affogato", "Antoccino", "Black eye", "Black tie", "Breve",
 'Caffè Americano', 'Café au lait', 'Café bombón', 'Café Cubano', 'Caffè crema', 'Café de olla', 'Caffè latte', 
 'Caffè Marocchino', 'Caffè Medici', 'Café miel', 'Coffee milk', 'Café mocha', 'Café Touba', 'Cafe Zorro',
 'Ca phe sua da', 'Cappuccino', 'Chai latte', 'iced coffee', 'Cortado', 'Doppio', 'Eggnog latte', 'Eiskaffee',

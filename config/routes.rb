@@ -4,7 +4,12 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'users#new'
-  get "/home" => "welcome#home"
+  get "/home" => "posts#index"
+  get "/session/new" => "session#new"
+  post "/session" => "session#create"
+  delete "/session/:id" => "session#destroy"
+
+
 
   resources :users, :coffee_bars, :comments, :posts, :likes, :coveted_coffees, :relationships
   # Example of regular route:

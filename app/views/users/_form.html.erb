@@ -18,7 +18,6 @@
 							    <%= f.file_field :avatar, label: 'photo' %>
 							    <%= f.password_field :password, label: 'password' %>
 							    <%= f.password_field :password_confirmation, label: 'confirm password' %>
-							    <%= f.hidden_field :authenticity_token, value: form_authenticity_token() %>
 							    <%= f.submit 'sign me up.' %>
 
 							<% end %>
