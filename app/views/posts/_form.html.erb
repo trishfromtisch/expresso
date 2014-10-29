@@ -14,7 +14,7 @@
 							    <%= f.hidden_field :user_id, value: @user.id %>
 							    <%= f.hidden_field :coffee_bar_id %>
 							    <%= f.select :beverage_id, @beverages.collect { |b| [b.name, b.id] }, { class: "selectpicker" } %>
-							    <%= f.select :brew_method_id, @brewing_methods.collect { |b| [b.name, b.id] }, { class: "selectpicker" } %>
+							    <%= f.select :brewing_method_id, @brewing_methods.collect { |b| [b.name, b.id] }, { class: "selectpicker" } %>
 							    <%= f.select :coffee_rating, [*1..5].collect { |num| num }, { class: "selectpicker" } %>
 							    <%= f.text_field :roaster, label: 'roaster' %>
 							    <%= f.text_field :title, label: 'label that brew' %>

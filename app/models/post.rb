@@ -3,8 +3,18 @@ class Post < ActiveRecord::Base
 	has_many :comments
 	belongs_to :coveted_coffees
 	has_one :beverage
+	belongs_to :coffee_bar
 	has_one :brewing_method
 	has_many :likes
+	validates :user_id, presence: true 
+	validates :beverage_id, presence: true
+	validates :brewing_method_id, presence: true
+	validates :coffee_rating, presence: true	
+	validates :coffee_bar_id, presence: true	
+	validates :roaster, presence: true	
+	validates :description, presence: true	
+	validates :title, presence: true		
 	has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 end
+

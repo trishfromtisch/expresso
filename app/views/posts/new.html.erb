@@ -1,3 +1,4 @@
+
 <header>
 	<div class="row">
 		<h1>Expresso</h1>
@@ -28,6 +29,10 @@
 <div id="homeDiv" style="display:block">
 	<h3 class="greeting">hello <%= @user.name %></h3>
 	<img src="<%= @user.avatar.url(:thumb) %>"> 
+	<div id="feed" class="col-md-10 col-md-offset-1">
+		<ul>
+		</ul>
+	</div>
 </div>
 	
 <div id="newPostDiv" style="display:block">
@@ -44,3 +49,14 @@
 		</div>	
 	</div>
 </div>
+
+
+<script>
+	initPostNew();
+	$.get("/posts", function(data){
+		console.log(data)
+		_.each(data, function(post){
+			$("ul").append("<li>"+ post.title + "</li>")
+		})
+	})
+</script>

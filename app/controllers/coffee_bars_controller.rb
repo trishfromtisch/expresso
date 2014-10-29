@@ -9,9 +9,7 @@ def index
 
 	def show
 		coffee_bar = CoffeeBar.find(params["id"])
-		respond_to do |format|
-			format.json { render :json => coffee_bar}
-		end
+			render :json coffee_bar
 	end
 
 	def create
