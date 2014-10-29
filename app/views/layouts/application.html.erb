@@ -56,14 +56,18 @@ function initialize() {
 // }
 
 
+$.get("/posts/location", function(data){
+
+	
+
   var markers = [];
   var map = new google.maps.Map(document.getElementById('map-canvas'), {
     mapTypeId: google.maps.MapTypeId.ROADMAP
   });
 
   var defaultBounds = new google.maps.LatLngBounds(
-      new google.maps.LatLng(-33.8902, 151.1759),
-      new google.maps.LatLng(-33.8474, 151.2631));
+      new google.maps.LatLng(data["swlat"], data["swlng"]),
+      new google.maps.LatLng(data["nelat"], data["nelng"]));
   map.fitBounds(defaultBounds);
 
   // Create the search box and link it to the UI element.
@@ -122,6 +126,18 @@ function initialize() {
     var bounds = map.getBounds();
     searchBox.setBounds(bounds);
   });
+
+  $("button#there").click(function(){
+  	var name_and_address = $("input#pac-input").val()
+	$.post("/coffee_bars", {name_and_address: name_and_address}
+		).done(function(data){
+			console.log(data.id)
+			$("input#post_coffee_bar_id").val(data.id)
+		})
+		$("div.postForm").toggle()
+		$("div#mapDiv").toggle("slow")
+	})
+})
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);

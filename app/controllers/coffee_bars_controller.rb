@@ -2,23 +2,34 @@ class CoffeeBarsController < ApplicationController
 
 def index
 		coffee_bars = CoffeeBar.all
-		format.json { render :json => coffee_bars}
+		respond_to do |format|
+		format.json {render :json => coffee_bars}
+		end
 	end
 
 	def show
 		coffee_bar = CoffeeBar.find(params["id"])
-		format.json { render :json => coffee_bar}
+		respond_to do |format|
+			format.json { render :json => coffee_bar}
+		end
 	end
 
 	def create
-		coffee_bar = CoffeeBar.new(params[:coffee_bar])
+		name_and_address = params["name_and_address"]
+		name = name_and_address.split(",")[0]
+		address = address = name_and_address.split(",")[1, name_and_address.length - 1].join
 
-		if coffee_bar.save
-			format.json { render :json => coffee_bar}
-     else
-       alert: 'Coffee bar was not saved. Please try again.'
-    end
-
+		if CoffeeBar.where(name: name, address: address) == []
+			coffee_bar = CoffeeBar.create({name: name, address: address})
+				respond_to do |format|
+					format.json { render :json => coffee_bar}
+				end
+		else
+			coffee_bar = CoffeeBar.find_by(name: name)
+				respond_to do |format|
+					format.json { render :json => coffee_bar}
+				end
+		end
 	end
 
 	def edit

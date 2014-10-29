@@ -4,10 +4,11 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'users#new'
-  get "/home" => "posts#index"
+  get "/home" => "posts#new"
   get "/session/new" => "session#new"
   post "/session" => "session#create"
   delete "/session/:id" => "session#destroy"
+  get "/posts/location" => "posts#location"
 
 
 
