@@ -5,7 +5,7 @@ class CovetedCoffeesController < ApplicationController
 
 		if @user
 			coveted_coffees = CovetedCoffee.where(user_id: @user.id)
-			format.json { render :json => coveted_coffees}
+			render :json => coveted_coffees
 		else
 			redirect_to '/'
 		end
@@ -14,14 +14,14 @@ class CovetedCoffeesController < ApplicationController
 
 	def show
 		coveted_coffee = CovetedCoffee.find(params["id"])
-		format.json {render :json => comment}
+		render :json => comment
 	end
 
 	def create
 		coveted_coffee = CovetedCoffee.new(params[:coveted_coffee])
 
 		if coveted_coffee.save
-			format.json { render :json => coveted_coffee}
+			render :json => coveted_coffee
      else
        alert: 'Covet was not saved. Please try again.'
     end
@@ -31,13 +31,13 @@ class CovetedCoffeesController < ApplicationController
 	def edit
 		coveted_coffee = CovetedCoffee.find(params["id"])
 		coveted_coffee.update(params[:coveted_coffee])
-		format.json { render :json => coveted_coffee}
+		render :json => coveted_coffee
 	end
 
 	def destroy
 		coveted_coffee = CovetedCoffee.find(params["id"])
 		coveted_coffee.destroy
-		format.json { render :json => coveted_coffee}
+		render :json => coveted_coffee
 	end
 
 

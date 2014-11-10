@@ -27,11 +27,13 @@
 </header>
 
 <div id="homeDiv" style="display:block">
-	<h3 class="greeting">hello <%= @user.name %></h3>
-	<img src="<%= @user.avatar.url(:thumb) %>"> 
-	<div id="feed" class="col-md-10 col-md-offset-1">
-		<ul>
-		</ul>
+	<div class='row'>
+		<h3 class="greeting">hello <%= @user.name %></h3>
+		<img src="<%= @user.avatar.url(:thumb) %>"> 
+		<div id="feed" class="col-md-10 col-md-offset-1">
+			<ul>
+			</ul>
+		</div>	
 	</div>
 </div>
 	
@@ -53,10 +55,22 @@
 
 <script>
 	initPostNew();
+
 	$.get("/posts", function(data){
 		console.log(data)
 		_.each(data, function(post){
-			$("ul").append("<li>"+ post.title + "</li>")
+			$("ul").append("<li>"+ post.title + " " +post.user.name + "</li>")
 		})
 	})
+	// $("a#newPost").click(function(event){
+	// 	event.preventDefault()
+	// 	$("div#homeDiv").toggle()
+	// 	$("div#newPostDiv").toggle()
+	// })
+	$("a#logout").click(function(event){
+		event.preventDefault()
+		console.log(event)
+		$.ajax({url: "/session", type: "DELETE"})
+	})
+
 </script>

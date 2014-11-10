@@ -1,4 +1,3 @@
-
 function googlePostNew() {
   $.get("/posts/location", function(data){
     var markers = [];

@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-	#before_filter :check_session	
+	before_filter :check_session	
 
 	def new
 		unless current_user
@@ -17,7 +17,7 @@ class PostsController < ApplicationController
 
 		@user = User.find_by(id: session[:user_id])
 		city = URI.encode(@user.city)
-		response = HTTParty.get("https://maps.googleapis.com/maps/api/geocode/json?address=#{city}&key=AIzaSyBoHA1NtwkGKXR_m3wPMB6K7Fn8JqeTY-k")
+		response = HTTParty.get("https://maps.googleapis.com/maps/api/geocode/json?address=#{city}&key=AIzaSyA6QaZLk-WITTViG0oNKQnfEQPiAGPP-eM")
 		nelat = response["results"][0]["geometry"]["bounds"]["northeast"]["lat"]
 		nelng = response["results"][0]["geometry"]["bounds"]["northeast"]["lng"]
 		swlat = response["results"][0]["geometry"]["bounds"]["southwest"]["lat"]
@@ -25,9 +25,8 @@ class PostsController < ApplicationController
 
 		location_hash = {nelat: nelat, nelng: nelng, swlat: swlat, swlng: swlng}
 		
-		respond_to do |format|
-    	format.json {render json: location_hash}
-    end
+    render :json => location_hash
+
 	end 
 
 	def create
@@ -36,7 +35,7 @@ class PostsController < ApplicationController
       if @post.save
         redirect_to "/home"
       else
-        render json: @post.errors, status: :unprocessable_entity 
+        render :json => @post.errors, :status => :unprocessable_entity 
       end  
   end
 
@@ -51,19 +50,19 @@ class PostsController < ApplicationController
 
 	def show
 		post = Post.find(params["id"])
-		format.json { render :json => post}
+		render :json => post
 	end
 
 	def edit
 		post = Post.find(params["id"])
 		post.update(params[:post])
-		format.json { render :json => post}
+		render :json => post
 	end
 
 	def destroy
 		post = Post.find(params["id"])
 		post.destroy
-		format.json { render :json => post}
+		render :json => post
 	end
 
 end

@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get "/home" => "posts#new"
   get "/session/new" => "session#new"
   post "/session" => "session#create"
-  delete "/session/:id" => "session#destroy"
+  delete "/session" => "session#destroy"
   get "/posts/location" => "posts#location_cool"
 
 

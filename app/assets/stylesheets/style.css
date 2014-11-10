@@ -1,7 +1,12 @@
+/*@import url(https://fonts.googleapis.com/css?family=Cabin+Sketch|Amatic+SC|Special+Elite|Cutive|Love+Ya+Like+A+Sister);
+*/
 div#welcome {
 	text-align:center;
 }
 
+h1 {
+	font-family: 'Amatic SC', cursive;
+}
 
 div#sign-up_or_login {
 	text-align: center;
