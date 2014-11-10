@@ -39,10 +39,9 @@
 	
 <div id="newPostDiv" style="display:block">
 	<div class="row">
-		<div id="mapDiv" class="col-md-offset-4">
+		<div id="cafeSearchDiv" class="col-md-offset-4">
 			<h5>where'd you get your brew?</h5>
-	    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
-	    <div id="map-canvas"></div>
+	    <input id="pac-input" type="text" class="controls" placeholder="Search for Cafes">
 	    <button id="there" class="btn btn-default col-md-offset-3">there.</button>
 	    <br>
     </div>
@@ -54,13 +53,26 @@
 
 
 <script>
-	initPostNew();
+	function initialize() {
+		var input = document.getElementById('pac-input');
+		$.get("/posts/location", function(data){
+      var defaultBounds = new google.maps.LatLngBounds(
+          new google.maps.LatLng(data["swlat"], data["swlng"]),
+          new google.maps.LatLng(data["nelat"], data["nelng"]));
+			var options = {bounds: defaultBounds, types: ['establishment']};
+					
+		new google.maps.places.Autocomplete(input, options);
+		})
+	}
+				
+	google.maps.event.addDomListener(window, 'load', initialize);
+		// getLocation();
 
 	$.get("/posts", function(data){
 		console.log(data)
-		_.each(data, function(post){
-			$("ul").append("<li>"+ post.title + " " +post.user.name + "</li>")
-		})
+		// _.each(data, function(post){
+		// 	$("ul").append("<li>"+ post.title + " " + post.user.name + "</li>")
+		// })
 	})
 	// $("a#newPost").click(function(event){
 	// 	event.preventDefault()
@@ -73,4 +85,14 @@
 		$.ajax({url: "/session", type: "DELETE"})
 	})
 
+	$("button#there").click(function(){
+      var name_and_address = $("input#pac-input").val()
+    $.post("/coffee_bars", {name_and_address: name_and_address}
+      ).done(function(data){
+        console.log(data.id)
+        $("input#post_coffee_bar_id").val(data.id)
+      })
+      $("div.postForm").toggle()
+      $("div#cafeSearchDiv").toggle("slow")
+    })
 </script>
