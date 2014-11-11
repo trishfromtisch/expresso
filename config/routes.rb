@@ -9,10 +9,15 @@ Rails.application.routes.draw do
   post "/session" => "session#create"
   delete "/session" => "session#destroy"
   get "/posts/location" => "posts#location_cool"
+  get "/coveted_coffees" => "coveted_coffees#index"
+  get "/coveted_coffees/:id" => "coveted_coffees#show" 
+  post "/coveted_coffees" => "coveted_coffees#create"
+  delete "/coveted_coffees/:id" => "coveted_coffees#destroy"
+  get "/posts/:id/coveted_coffees" => "posts#coveted_coffees"
 
 
 
-  resources :users, :coffee_bars, :comments, :posts, :likes, :coveted_coffees, :relationships
+  resources :users, :coffee_bars, :comments, :posts, :relationships
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

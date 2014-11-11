@@ -1,11 +1,11 @@
 class Post < ActiveRecord::Base
 	belongs_to :user
 	has_many :comments
-	belongs_to :coveted_coffees
-	has_one :beverage
+	has_many :coveted_coffees
+	belongs_to :beverage
 	belongs_to :coffee_bar
-	has_one :brewing_method
-	has_many :likes
+	belongs_to :brewing_method
+	has_many :relationships
 	validates :user_id, presence: true 
 	validates :beverage_id, presence: true
 	validates :brewing_method_id, presence: true

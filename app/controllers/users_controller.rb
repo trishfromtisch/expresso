@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   @user = User.new(user_params)
 
     respond_to do |format|
-      if @user.save
+      if @user.save     	
         format.html { redirect_to "/", notice: 'account created. welcome, #{@user.name}' }
         format.json { render action: 'show', status: :created, location: @user }
       else
@@ -33,18 +33,18 @@ class UsersController < ApplicationController
 		user = User.find(params["id"])
 		user.update(params[:user])
 		
-		format.json { render :json => user}
+		render :json => user
 	end
 
 	def show
 		user = User.find(params["id"])
-		format.json { render :json => user}
+		render :json => user
 	end
 
 	def destroy
 		user = User.find(params["id"])
 		user.destroy
-		format.json { render :json => user}
+		render :json => user
 	end
 
 end

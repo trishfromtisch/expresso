@@ -44,13 +44,47 @@ class PostsController < ApplicationController
   end 
 
 	def index
-		@posts = Post.all
-		render :json => @posts
+		
+		@posts_array = []
+		posts = Post.all
+		posts.each do |post|
+			hash = {} 
+			hash[:id] = post.id
+			hash[:beverage] = post.beverage.name
+			hash[:username] = post.user.name
+			hash[:coffee_bar] = post.coffee_bar.name
+			hash[:roaster] = post.roaster
+			hash[:brewing_method] = post.brewing_method.name
+			hash[:description] = post.description
+			hash[:title] = post.title
+			hash[:coffee_rating] = post.coffee_rating
+			hash[:avatar] = post.avatar
+			hash[:created_at] = post.created_at.strftime("%a, %b %e %Y")
+			@posts_array << hash
+		end
+		# posts_with_users = posts_array.each {|post| post["username"] = post.user.name}
+		# puts posts_with_users
+		render :json => @posts_array
 	end
 
 	def show
 		post = Post.find(params["id"])
-		render :json => post
+
+		@post = {}
+		@post[:id] = post.id
+		@post[:beverage] = post.beverage.name
+		@post[:username] = post.user.name
+		@post[:coffee_bar] = post.coffee_bar.name
+		@post[:coffee_bar_id] = post.coffee_bar_id
+		@post[:roaster] = post.roaster
+		@post[:brewing_method] = post.brewing_method.name
+		@post[:description] = post.description
+		@post[:title] = post.title
+		@post[:coffee_rating] = post.coffee_rating
+		@post[:avatar] = post.avatar
+		@post[:created_at] = post.created_at.strftime("%a, %b %e %Y")
+
+		render :json => @post
 	end
 
 	def edit
@@ -63,6 +97,11 @@ class PostsController < ApplicationController
 		post = Post.find(params["id"])
 		post.destroy
 		render :json => post
+	end
+
+	def coveted_coffees
+		coveted_coffees = CovetedCoffee.where({user_id: session[:user_id], post_id: params[:id]})
+		render :json => coveted_coffees
 	end
 
 end

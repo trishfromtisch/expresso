@@ -74,3 +74,11 @@ nav div a {
       #target {
         width: 345px;
       }
+
+     ul {
+    list-style-type: none;
+		}
+
+		#covetStatus div p {
+			color: green;
+		}
