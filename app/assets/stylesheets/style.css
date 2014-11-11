@@ -82,3 +82,9 @@ nav div a {
 		#covetStatus div p {
 			color: green;
 		}
+
+		#feed {
+			border: 1px solid black;
+			border-radius: 5px;
+			padding: -20px;
+		}
