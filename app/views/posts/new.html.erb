@@ -1,10 +1,11 @@
 
 <header>
 	<div class="row">
-		<div class='col-md-2'>
+		<div class='col-md-4'>
 			<h1>expresso.</h1>
+			<p>brew reviews from coffee snobs like you</p>
 		</div>
-		<div class='col-md-2 col-md-offset-8 greeting'>
+		<div class='col-md-2 col-md-offset-6 greeting'>
 			<h5 class="greeting">hello <%= @user.name %>.</h5>
 			<img src="<%= @user.avatar.url(:thumb) %>">
 		</div>	
@@ -35,6 +36,7 @@
 <div id="homeDiv" style="display:block">
 		<div class='row'> 
 			<div id="feed" class="col-md-10 col-md-offset-1" style="display:block">
+				<h4>what everybody's drinking</h4>
 				<table class='table table-responsive table-hover'>
 				</table>
 			</div>
@@ -79,7 +81,7 @@
 		} else {
 			data = _.sortBy(data, function(post){ return post.id * -1})
 		_.each(data, function(post){
-			$("table").append("<tr><td class='likeCheck " + post.id + "'><img class='like' src='http://i.imgur.com/vZN0HCL.png?1' /><td><td id='" + post.id + "'><img src='"+ post.avatar + "'/><strong>  "+ post.title + "</strong> " + post.username + " rates the " + post.brewing_method + " " + post.beverage + " at " + post.coffee_bar + " <button class='modalLauncher btn btn-default btn-xs' data-toggle='modal' data-target='#myModal'>details</button></td></tr>")
+			$("table").append("<tr><td class='likeCheck " + post.id + "'><img class='like' src='http://i.imgur.com/vZN0HCL.png?1' /><td><td id='" + post.id + "'><img src='"+ post.avatar + "'/><strong>  "+ post.title + "</strong> " + post.username + " rates the " + post.brewing_method + " " + post.beverage + " at " + post.coffee_bar + " <button class='" + post.id + " modalLauncher btn btn-default btn-xs' data-toggle='modal' data-target='#myModal'>details</button></td></tr>")
 			
 			
 			likeCheck(post.id)
@@ -90,12 +92,12 @@
 		$.get("/likes/" + postID, function(data){
 			likeTotal = data.length
 			$("td." + postID).append("<strong class='" + postID + "'> " + likeTotal + "</strong>");
-			modalLauncher(likeTotal)
+			modalLauncher(likeTotal, postID)
 	})
 	}
 
- function modalLauncher(likeTotal){
- 	$("button.modalLauncher").click(function(){
+ function modalLauncher(likeTotal, postID){
+ 	$("button." + postID + ".modalLauncher").click(function(){
  		console.log(likeTotal)
  		$.get("/posts/" + $(this).parent('td').attr("id"), function(post){
  			$("div.modal-header").empty()

@@ -7,7 +7,7 @@ class LikesController < ApplicationController
 
 	def create
 		like = Like.create({post_id: params[:post_id], user_id: session[:user_id]})
-		likeTotal = Like.where({post_id: params[:post_id]})
+		likeTotal = Like.where({post_id: params[:post_id]}).length
 		render :json => likeTotal
 	end
 
