@@ -1,7 +1,13 @@
 
 <header>
 	<div class="row">
-		<h1>Expresso</h1>
+		<div class='col-md-2'>
+			<h1>expresso.</h1>
+		</div>
+		<div class='col-md-2 col-md-offset-8 greeting'>
+			<h5 class="greeting">hello <%= @user.name %>.</h5>
+			<img src="<%= @user.avatar.url(:thumb) %>">
+		</div>	
 		<br>
 	</div>
 	<div class="row">
@@ -27,16 +33,12 @@
 </header>
 
 <div id="homeDiv" style="display:block">
-	<div class='row'>
-		<h3 class="greeting">hello <%= @user.name %></h3>
-		<img src="<%= @user.avatar.url(:thumb) %>">
-		<div> 
-			<div id="feed" class="col-md-8 col-md-offset-2">
-				<ul>
-				</ul>
+		<div class='row'> 
+			<div id="feed" class="col-md-10 col-md-offset-1" style="display:block">
+				<table class='table table-responsive table-hover'>
+				</table>
 			</div>
 		</div>		
-	</div>
 </div>
 	
 <div id="newPostDiv" style="display:none">
@@ -75,40 +77,61 @@
 		if (data == []) {
 		console.log(data)
 		} else {
+			data = _.sortBy(data, function(post){ return post.id * -1})
 		_.each(data, function(post){
-			$("ul").append("<li id='" + post.id + "'><strong>"+ post.title + "</strong> " + post.username + " rates the " + post.brewing_method + " " + post.beverage + " at " + post.coffee_bar + " <button class='modalLauncher btn btn-default btn-xs' data-toggle='modal' data-target='#myModal'>details</button></li>")
+			$("table").append("<tr><td class='likeCheck " + post.id + "'><img class='like' src='http://i.imgur.com/vZN0HCL.png?1' /><td><td id='" + post.id + "'><img src='"+ post.avatar + "'/><strong>  "+ post.title + "</strong> " + post.username + " rates the " + post.brewing_method + " " + post.beverage + " at " + post.coffee_bar + " <button class='modalLauncher btn btn-default btn-xs' data-toggle='modal' data-target='#myModal'>details</button></td></tr>")
 			
-			modalLauncher()
-		
-			// avatar: "https://coffeecovet.s3.amazonaws.com/posts/avatars/7/original/cappuccino.jpg?1415640410"beverage: "antoccino"brewing_method: "aeropress"coffee_bar: "Blue Bottle Coffee"coffee_rating: 5description: "Would recommend."roaster: "Blue Bottle"title: "Best coffee evar!!!!"username: "trishfromtisch"
+			
+			likeCheck(post.id)
 		})}
 	})
 
- function modalLauncher(){
+	function likeCheck(postID){
+		$.get("/likes/" + postID, function(data){
+			likeTotal = data.length
+			$("td." + postID).append("<strong class='" + postID + "'> " + likeTotal + "</strong>");
+			modalLauncher(likeTotal)
+	})
+	}
+
+ function modalLauncher(likeTotal){
  	$("button.modalLauncher").click(function(){
- 		$.get("/posts/" + $(this).parent('li').attr("id"), function(post){
- 			console.log(post)
- 			$("h4#myModalLabel").text("")
-			$("h4#myModalLabel").text(post.title)
+ 		console.log(likeTotal)
+ 		$.get("/posts/" + $(this).parent('td').attr("id"), function(post){
+ 			$("div.modal-header").empty()
+ 			$("div.modal-header").append("<div id='modalTitle' class='col-md-4'><h4>" + post.title + "</h4></div><div class='col-md-offset-9'><button class='btn btn-default' id='likeButton'><img class='bigLike' src='http://i.imgur.com/vZN0HCL.png?1' /></button><div id='modalLikes'> " + likeTotal + "</div></div>")
 			$("div.modal-body").empty()
-			$("div.modal-body").append("<div id='modalDetails' class='col-md-offset-2'><h5>reviewed by <a>" + post.username + "</a></h5><img src='" + post.avatar + "' /><br><p>" + post.brewing_method + " " + post.beverage + " from <a id='" + post.coffee_bar_id + "'>" + post.coffee_bar + "</a></p><h5>" + post.coffee_rating + "</h5><p>" + post.description + "</p><div id='covetStatus'></div></div>")
+			$("div.modal-body").append("<div id='modalDetails' class='col-md-offset-2'><h5>reviewed by <a>" + post.username + "</a> on " + post.created_at + "</h5><img src='" + post.avatar + "' /><br><p>how: " + post.brewing_method + "<br>what: " + post.beverage + "<br>from: <a id='" + post.coffee_bar_id + "'>" + post.coffee_bar + "</a><br>was: a <strong>" + post.coffee_rating + "</strong> on the delicious scale.<br>so: " + post.description + "</p><div id='covetStatus'></div></div>")
+			// 
 
 			checkForCovet(post.id)
+			addLike(post.id) 
 
  		})
 	})}
 
+ 	function addLike(postID){
+ 		$("button#likeButton").click(function(){
+ 			$.post("/likes", {post_id: postID}).done(function(currentTotal){
+ 				console.log(currentTotal)
+ 				$("div#modalLikes").text(currentTotal)
+ 				$("strong." + postID).text(currentTotal)
+ 			})
+ 		})
+ 	}
+
 	function checkForCovet(postID){
 		$.get("/posts/" + postID +"/coveted_coffees", function(data){
-			if (data == []) {
+			console.log(data)
+			if (data.length > 0 ){
+				$('div#covetStatus').empty()
+				$("div#covetStatus").append("<div class='col-md-offset-3'><p>coveted.</p></div>")
+			} else {
 				$('div#covetStatus').empty()
 				$('div#covetStatus').append("<button class='btn btn-default btn-md' id='covet'>covet this coffee.</button>")
 				$("button#covet").click(function(){
 				createCovet(postID)
 				})
-			}	else {
-				$('div#covetStatus').empty()
-				$("div#covetStatus").append("<div class='col-md-offset-3'><p>coveted.</p></div>")
 			}
 		})		
 	}
@@ -136,9 +159,15 @@
 		// getLocation();
 
 
+	$("a#home").click(function(event){
+		event.preventDefault()
+		$("div#feed").toggle("fast")
+		$("div#newPostDiv").toggle()
+	})
 
 	$("a#newPost").click(function(event){
 		event.preventDefault()
+		$("div#feed").toggle("fast")
 		$("div#newPostDiv").toggle()
 	})
 	$("a#logout").click(function(event){

@@ -19,7 +19,12 @@ div#welcome-box {
 }
 
 nav div a {
-	text-align: center;
+	text-align: left;
+}
+
+nav {
+	margin-bottom: 100px;
+	margin-top: 20px;
 }
 #map-canvas {
         height: 325px;
@@ -84,7 +89,67 @@ nav div a {
 		}
 
 		#feed {
-			border: 1px solid black;
 			border-radius: 5px;
 			padding: -20px;
+			box-shadow: 0 0 1em black;
+		}
+
+		th {
+			float: center;
+		}
+
+		tr td img {
+			width: 40px;
+			border-radius: 3px;
+		}
+
+		tr td button {
+			float: right;
+		}
+
+		td.likeCheck {
+			width: 70px;
+		}
+		img.like {
+			width: 40px;
+			border-radius: 1px;
+		}
+
+		img.bigLike {
+			display: inline;
+			width: 70px;
+		}
+
+		div#modalDetails img {
+			border-radius: 7px;
+		}
+
+		div.greeting img {
+			width: 70px;
+			display: inline;
+		}
+
+		h5.greeting {
+			display: inline;
+		}
+
+		button#likeButton {
+			display: inline;
+			border: 1px solid transparent;
+		}
+
+		div.modal-header {
+			padding: 0;
+		}
+
+		div#modalTitle h4 {
+			display: inline;
+			margin-top: 20px;
+		}
+
+		div#modalTitle {
+			padding-top: 30px;
+		}
+		strong {
+			display: inline;
 		}

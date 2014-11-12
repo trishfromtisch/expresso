@@ -6,6 +6,7 @@ class Post < ActiveRecord::Base
 	belongs_to :coffee_bar
 	belongs_to :brewing_method
 	has_many :relationships
+	has_many :likes
 	validates :user_id, presence: true 
 	validates :beverage_id, presence: true
 	validates :brewing_method_id, presence: true
